@@ -3,7 +3,6 @@
 import os
 from functools import wraps
 
-
 def deco(color):
     """Decorador para colorear la salida en consola usando códigos ANSI."""
     def decorator(func):
@@ -25,13 +24,14 @@ def deco(color):
             return f"{start}{result}{end}"
         return wrapper
     return decorator
-    
+
+
 class FileReader:
     """Clase para leer y escribir archivos línea por línea."""
 
-    def __init__(self):
+    def __init__(self, filepath):
         """Inicializa el FileReader con la ruta del archivo."""
-        self.filepath = "test.txt"
+        self.filepath = filepath
 
     def read_lines(self):
         """Generador que retorna cada línea del archivo sin espacios al final."""
@@ -50,7 +50,7 @@ class FileReader:
         with open(self.filepath, 'w', encoding='utf-8') as file:
             for line in new_lines:
                 file.write(line + '\n')
-    
+
     def __str__(self):
         """Devuelve una descripción del archivo y cantidad de líneas."""
         return f"FileReader({self.filepath}) with {len(self.lines)} lines"
@@ -100,6 +100,7 @@ class FileReader:
                     out.write('\n')
         return cls(output)
 
+
 class AdvancedFileReader(FileReader):
     """Extiende FileReader con funciones adicionales como el conteo de palabras."""
 
@@ -115,16 +116,19 @@ class AdvancedFileReader(FileReader):
         """Imprime el contenido del archivo con color."""
         return "\n".join(self.lines)
 
+
 file1= FileReader("test.txt")
 file2= FileReader("test2.txt")
 
-if __name__ == "__main__":
-    reader = FileReader()
-    print("contenido del archivo test.txt=")
-    for line in reader.lines:
-        print(line)
-        
+if __name__ == '__main__':
+    reader = AdvancedFileReader("test.txt")
+    print(reader.print_content())
+    print(reader.word_count())
+    
+    
+
 #print(FileReader.from_two_files(file1.filepath, file2.filepath, output='combined.txt'))
 #combined = file1 + file2
 #print("\n".join(combined.lines))
 #print(reader)
+
