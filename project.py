@@ -1,3 +1,31 @@
+"""project_2.py: Program for reading and handling text files using OOP."""
+
+import os
+from functools import wraps
+
+
+def deco(color):
+    """Decorador para colorear la salida en consola usando códigos ANSI."""
+    def decorator(func):
+        @wraps(func)
+        def wrapper(*args, **kwargs):
+            colors = {
+                'red': '\033[91m',
+                'green': '\033[92m',
+                'yellow': '\033[93m',
+                'reset': '\033[0m',
+            }
+            if color in colors:
+                start = colors[color]
+            else:
+                start = colors['reset']
+            
+            end = colors['reset']
+            result = func(*args, **kwargs)
+            return f"{start}{result}{end}"
+        return wrapper
+    return decorator
+    
 class FileReader:
     """Clase para leer y escribir archivos línea por línea."""
 
