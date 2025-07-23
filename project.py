@@ -4,7 +4,7 @@ import os
 from functools import wraps
 
 def deco(color):
-    """Decorador para colorear la salida en consola usando códigos ANSI."""
+    """Decorator that applies color to the output using ANSI CODES."""
     def decorator(func):
         @wraps(func)
         def wrapper(*args, **kwargs):
@@ -14,6 +14,9 @@ def deco(color):
                 'yellow': '\033[93m',
                 'reset': '\033[0m',
             }
+
+            """"If the color is not in the dictionary,
+              it uses the reset color."""
             if color in colors:
                 start = colors[color]
             else:
@@ -27,51 +30,42 @@ def deco(color):
 
 
 class FileReader:
-    """Clase para leer y escribir archivos línea por línea."""
+    """Class that reads and writes text files line by line."""
 
     def __init__(self, filepath):
-        """Inicializa el FileReader con la ruta del archivo."""
+        """Initializes the FileReader."""
         self.filepath = filepath
 
     def read_lines(self):
-        """Generador que retorna cada línea del archivo sin espacios al final."""
+        """Generator that returns all the lines without whitespaces."""
         with open(self.filepath, 'r', encoding='utf-8') as file:
             for line in file:
                 yield line.strip()
 
     @property
     def lines(self):
-        """Devuelve todas las líneas como una lista."""
+        """Returns all lines as a list."""
         return list(self.read_lines())
 
     @lines.setter
     def lines(self, new_lines):
-        """Sobrescribe el archivo con nuevas líneas."""
+        """Overwrites the file with new lines."""
         with open(self.filepath, 'w', encoding='utf-8') as file:
             for line in new_lines:
                 file.write(line + '\n')
 
     def __str__(self):
-        """Devuelve una descripción del archivo y cantidad de líneas."""
+        """returns the amount of lines in the file."""
         return f"FileReader({self.filepath}) with {len(self.lines)} lines"
 
     @staticmethod
     def is_text_file(filename):
-        """Verifica si un archivo tiene extensión .txt."""
+        """checks if the file is a .txt file."""
         return filename.endswith('.txt')
-
-    @classmethod
-    def from_two_files(cls, file1, file2, output='combined.txt'):
-        """Combina el contenido de dos archivos en uno nuevo."""
-        with open(output, 'w', encoding='utf-8') as out:
-            for path in (file1, file2):
-                with open(path, 'r', encoding='utf-8') as file:
-                    out.write(file.read())
-                    out.write('\n')
-        return cls(output)
+    
 
     def __add__(self, other):
-        """Permite sumar dos instancias para combinar archivos."""
+        """Allows adding two instances to combine files."""
         if not isinstance(other, FileReader):
             raise TypeError("Can only add FileReader instances together.")
 
@@ -92,7 +86,7 @@ class FileReader:
 
     @classmethod
     def combine_multiple_files(cls, *files, output='combined_multiple.txt'):
-        """Combina múltiples archivos en uno solo."""
+        """Combines multiple files into a single one."""
         with open(output, 'w', encoding='utf-8') as out:
             for filename in files:
                 with open(filename, 'r', encoding='utf-8') as file:
@@ -102,10 +96,11 @@ class FileReader:
 
 
 class AdvancedFileReader(FileReader):
-    """Extiende FileReader con funciones adicionales como el conteo de palabras."""
+    """Extends FileReader with additional functions like word counting 
+    and colorized output."""
 
     def word_count(self):
-        """Cuenta el total de palabras en el archivo."""
+        """Counts the total number of words in the file."""
         count = 0
         for line in self.read_lines():
             count += len(line.split())
@@ -113,22 +108,20 @@ class AdvancedFileReader(FileReader):
 
     @deco('red')
     def print_content(self):
-        """Imprime el contenido del archivo con color."""
+        """Prints the content of the file with color using the decorator."""
         return "\n".join(self.lines)
 
 
-file1= FileReader("test.txt")
-file2= FileReader("test2.txt")
+
 
 if __name__ == '__main__':
+    file1= FileReader("test.txt")
+    file2= FileReader("test2.txt")
     reader = AdvancedFileReader("test.txt")
     print(reader.print_content())
-    print(reader.word_count())
-    
-    
-
-#print(FileReader.from_two_files(file1.filepath, file2.filepath, output='combined.txt'))
-#combined = file1 + file2
-#print("\n".join(combined.lines))
-#print(reader)
+    print(f"Words: ", reader.word_count())
+    print(FileReader.combine_multiple_files(file1.filepath, file2.filepath, output='combined.txt'))
+    combined = file1 + file2
+    print("\n".join(combined.lines))
+    print(reader) 
 
