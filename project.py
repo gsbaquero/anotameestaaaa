@@ -118,7 +118,7 @@ class AdvancedFileReader(FileReader):
 file1= FileReader("test.txt")
 file2= FileReader("test2.txt")
 
-if "__name__" == "__main__":
+if __name__ == "__main__":
     reader = FileReader()
     print("contenido del archivo test.txt=")
     for line in reader.lines:
