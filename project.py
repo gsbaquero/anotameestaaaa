@@ -100,9 +100,31 @@ class FileReader:
                     out.write('\n')
         return cls(output)
 
+class AdvancedFileReader(FileReader):
+    """Extiende FileReader con funciones adicionales como el conteo de palabras."""
+
+    def word_count(self):
+        """Cuenta el total de palabras en el archivo."""
+        count = 0
+        for line in self.read_lines():
+            count += len(line.split())
+        return count
+
+    @deco('red')
+    def print_content(self):
+        """Imprime el contenido del archivo con color."""
+        return "\n".join(self.lines)
+
+file1= FileReader("test.txt")
+file2= FileReader("test2.txt")
+
 if "__name__" == "__main__":
     reader = FileReader()
     print("contenido del archivo test.txt=")
     for line in reader.lines:
         print(line)
         
+#print(FileReader.from_two_files(file1.filepath, file2.filepath, output='combined.txt'))
+#combined = file1 + file2
+#print("\n".join(combined.lines))
+#print(reader)
