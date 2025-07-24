@@ -115,9 +115,9 @@ class AdvancedFileReader(FileReader):
 
 
 if __name__ == '__main__':
-    file1= FileReader("test.txt")
-    file2= FileReader("test2.txt")
-    reader = AdvancedFileReader("test.txt")
+    file1= FileReader("text.txt")
+    file2= FileReader("text2.txt")
+    reader = AdvancedFileReader("text.txt")
     print(reader.print_content())
     print(f"Words: ", reader.word_count())
     print(FileReader.combine_multiple_files(file1.filepath, file2.filepath, output='combined.txt'))
