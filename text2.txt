@@ -1,3 +1,8 @@
-pytest is boring
-hello? someone there?
-my name is you and you is me
+Code like it’s working
+Comment like someone’s actually gonna read it.
+Debug like you didn’t write it at 2 a.m.
+hopped up on caffeine and existential dread.
+Push to prod like it’s a test branch
+because hey, what’s the worst that could happen?
+And when it breaks, just blame the comments
+They clearly misled you.

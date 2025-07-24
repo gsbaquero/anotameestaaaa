@@ -1,7 +1,7 @@
 """Pytest for project_2 module."""
 import os
 import pytest
-from project_2 import FileReader, AdvancedFileReader, deco
+from project import FileReader, AdvancedFileReader, deco
 
 @pytest.fixture
 def file_a():

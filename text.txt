@@ -1,2 +1,4 @@
-hello this is a final project
-and it is very important
+Just some code,
+a bit of stress,
+no one knows what’s going on 
+more or less
